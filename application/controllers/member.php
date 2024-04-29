@@ -94,8 +94,7 @@ public function daftar()
 }
 
 public function myProfil() 
-{ 
-    $data['judul'] = 'Profil Saya'; 
+{  
     $user = $this->ModelUser->cekData(['email' => $this->session->userdata('email')])->row_array(); 
         foreach ($user as $a) { 
         $data = [ 
@@ -105,6 +104,7 @@ public function myProfil()
             'tanggal_input' => $user['tanggal_input'], 
 ]; 
 } 
+    $data['judul'] = 'Profil Saya';
     $this->load->view('templates/templates-user/header', $data); 
     $this->load->view('member/index', $data); 
     $this->load->view('templates/templates-user/modal'); 
@@ -112,8 +112,7 @@ public function myProfil()
 }
 
 public function ubahProfil() 
-{ 
-    $data['judul'] = 'Profil Saya'; 
+{  
     $user = $this->ModelUser->cekData(['email' => $this->session->userdata('email')])->row_array(); 
     foreach ($user as $a) { 
         $data = [ 
@@ -126,7 +125,7 @@ public function ubahProfil()
 $this->form_validation->set_rules('nama', 'Nama Lengkap', 'required|trim', [ 
     'required' => 'Nama tidak Boleh Kosong' 
     ]); 
-
+    $data['judul'] = 'Ubah Profil Saya';
     if ($this->form_validation->run() == false) { 
         $this->load->view('templates/templates-user/header', $data); 
         $this->load->view('member/ubah-anggota', $data); 
