@@ -1,4 +1,5 @@
 <?php if (!defined('BASEPATH')) exit('No Direct Script Access Allowed');
+
 class Pinjam extends CI_Controller
 {
     public function __construct()
@@ -9,7 +10,7 @@ class Pinjam extends CI_Controller
     }
 
     public function index()
-    {   $data['judul'] = "Data Pinjam";
+    {  $data['judul'] = "Data Pinjam";
         $data['user'] = $this->ModelUser->cekData(['email' => $this->session->userdata('email')])->row_array();
         $data['pinjam'] = $this->ModelPinjam->joinData();
 
@@ -18,7 +19,6 @@ class Pinjam extends CI_Controller
         $this->load->view('templates/topbar', $data);
         $this->load->view('pinjam/data-pinjam', $data);
         $this->load->view('templates/footer');
-
 
     }
 
@@ -49,7 +49,6 @@ class Pinjam extends CI_Controller
         $this->load->view('booking/booking-detail', $data);
         $this->load->view('templates/footer');
     }
-
     public function pinjamAct()
     {
         $id_booking = $this->uri->segment(3);
@@ -80,12 +79,11 @@ class Pinjam extends CI_Controller
         //$this->db->query("DELETE FROM booking WHERE id_booking='$id_booking'");
 
         //update dibooking dan dipinjam pada tabel buku saat buku yang dibooking diambil untuk dipinjam
-        $this->db->query("UPDATE buku, detail_pinjam SET buku.dipinjam=buku.dipinjam+1, buku.dibooking=buku.dibooking-1 WHERE buku.id=detail_pinjam.id_bukuand no_pinjam='$no_pinjam'");
+        $this->db->query("UPDATE buku, detail_pinjam SET buku.dipinjam=buku.dipinjam+1, buku.dibooking=buku.dibooking-1 WHERE buku.id=detail_pinjam.id_buku and no_pinjam='$no_pinjam'");
 
-        $this->session->set_flashdata('pesan', '<div class="alert alert-message alert-success" role="alert">Data Peminjaman Berhasil Disimpan</div>');
+        $this->session->set_flashdata('pesan', '<div class="alert alert-massege alert-success" role="alert">Data Peminjaman Berhasil Disimpan</div>');
         redirect(base_url() . 'pinjam');
     }
-
     public function ubahStatus()
     {
         $id_buku = $this->uri->segment(3);
@@ -100,7 +98,7 @@ class Pinjam extends CI_Controller
         //update stok dan dipinjam pada tabel buku
         $this->db->query("UPDATE buku, detail_pinjam SET buku.dipinjam=buku.dipinjam-1, buku.stok=buku.stok+1 WHERE buku.id=detail_pinjam.id_buku");
 
-        $this->session->set_flashdata('pesan', '<div class="laert alert-message alert-success" role="alert"></div>');
+        $this->session->set_flashdata('pesan', '<div class="alert alert-massege alert-success" role="alert"></div>');
         redirect(base_url('pinjam'));
     }
 
